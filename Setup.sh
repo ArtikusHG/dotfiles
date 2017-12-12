@@ -10,14 +10,15 @@ sudo apt-get install numix-gtk-theme
 echo "Setting up the dotfiles"
 cp .fehbg ~/
 cp autostart ~/.config/openbox/
+cp .Xresources ~/
 sudo rm /etc/conky/conky.conf
 sudo cp conky.conf /etc/conky
-sudo rm /usr/share/themes/Numix/themerc
-sudo cp themerc /usr/share/themes/Numix
+sudo rm /usr/share/themes/Numix/openbox-3/themerc
+sudo cp themerc /usr/share/themes/Numix/openbox-3/themerc
+sudo rm /etc/X11/openbox/menu.xml
+sudo cp menu.xml /etc/X11/openbox
 cp wallpaper.jpg ~/
-echo "Installing fish"
-sudo apt-get install fish
-echo "Making fish start after opening the terminal"
-echo "fish" > ~/.bashrc
-echo "Now, set the GNOME Terminal background color to #272D3A (There's no proper way of doing that via CLI :/"
-echo "After doing that, you're allset to using my rice! Login into Openbox and enjoy!"
+echo "Installing xterm"
+sudo apt-get install xterm
+echo 'PS1="[\W] "' > ~/.bashrc
+echo "All done. Now, restart openbox and start the terminal emulator to see the difference :D"
