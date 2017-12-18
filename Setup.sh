@@ -1,6 +1,6 @@
 !#/bin/bash
-echo "Installing openbox, feh and conky"
-sudo apt-get install openbox feh conky conky-all
+echo "Installing openbox, feh and tint2"
+sudo apt-get install openbox feh tint2
 echo "Adding numix ppa"
 sudo apt-add-repository ppa:numix/ppa
 echo "Updating repositories"
@@ -11,8 +11,8 @@ echo "Setting up the dotfiles"
 cp .fehbg ~/
 cp autostart ~/.config/openbox/
 cp .Xresources ~/
-sudo rm /etc/conky/conky.conf
-sudo cp conky.conf /etc/conky
+rm ~/.config/tint2/tint2rc
+cp tint2rc ~/.config/tint2
 sudo rm /usr/share/themes/Numix/openbox-3/themerc
 sudo cp themerc /usr/share/themes/Numix/openbox-3/themerc
 sudo rm /etc/X11/openbox/menu.xml
