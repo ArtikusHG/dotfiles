@@ -1,0 +1,211 @@
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+	    variant "colemak_dh"
+            options "caps:backspace,altwin:swap_alt_win"
+        }
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        accel-speed 0.3
+    }
+
+    focus-follows-mouse max-scroll-amount="55%"
+}
+
+/-output "eDP-1" {
+    mode "1920x1080@120.030"
+
+    scale 2
+    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
+    transform "normal"
+    position x=1280 y=0
+}
+
+layout {
+    background-color "#bc9790"
+    gaps 16
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { proportion 1.0; }
+
+    focus-ring {
+        off
+    }
+
+    border {
+        width 4
+        active-color "#f5e0dc"
+        inactive-color "#7c86aa"
+        urgent-color "#9b0000"
+    }
+}
+
+overview {
+    backdrop-color "#bc9790"
+}
+
+spawn-at-startup "swaybg" "-m" "fill" "-i" "/home/artikus/Pictures/wallpaper.jpg"
+spawn-at-startup "makobar"
+spawn-at-startup "foot" "-s"
+spawn-at-startup "ctrl_layout"
+spawn-at-startup "swayidle"
+spawn-at-startup "wlsunset" "-l" "47" "-L" "28.9"
+spawn-at-startup "timedatectl" "set-local-rtc" "0" // for the weirdest reason ever this is needed on both my computers for telegram desktop to display the time correctly
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+window-rule {
+    match app-id=r#"imv"#
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id=r#"foot"#
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="launcher"
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"org.gnome.Nautilus"#
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id=r#"org.telegram.desktop"#
+    exclude title="^Media viewer"
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
+    open-fullscreen false
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"FreeTube"#
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id=r#"chrome"#
+    open-floating true
+}
+
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Mod+T { spawn "footclient"; }
+    Mod+Return { spawn "footclient" "--window-size-pixels=500x400" "--app-id" "launcher" "fsel" "-d"; }
+    Mod+Escape hotkey-overlay-title="Power menu" { spawn "footclient" "--window-size-pixels=200x250" "--app-id" "launcher" "powermenu"; }
+    Mod+A allow-when-locked=true { spawn "footclient" "--app-id" "launcher" "--window-size-pixels=500x300" "audiomenu"; }
+    Mod+D hotkey-overlay-title="Caffeine" { spawn "caffeine"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "volumeosd" "up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "volumeosd" "down"; }
+    XF86AudioMute allow-when-locked=true { spawn "volumeosd" "mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    Mod+O repeat=false { toggle-overview; }
+    Mod+Q repeat=false { close-window; }
+
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+    
+    Mod+Shift+Page_Down { move-window-down-or-to-workspace-down; }
+    Mod+Shift+Page_Up { move-window-up-or-to-workspace-up; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End { move-column-to-last; }
+
+    Mod+Shift+Ctrl+Left { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    // And you can also move a whole workspace to another monitor:
+    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+
+    Mod+Page_Down { focus-workspace-down; }
+    Mod+Page_Up { focus-workspace-up; }
+
+    Mod+Ctrl+Page_Down { move-workspace-down; }
+    Mod+Ctrl+Page_Up { move-workspace-up; }
+
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollLeft { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft { move-column-left; }
+
+    Mod+Shift+WheelScrollDown { focus-column-right; }
+    Mod+Shift+WheelScrollUp { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp { move-column-left; }
+
+    Mod+TouchpadScrollDown cooldown-ms=50 { spawn "volumeosd" "up"; }
+    Mod+TouchpadScrollUp cooldown-ms=50 { spawn "volumeosd" "down"; }
+
+    Mod+1 { spawn "run-or-focus" "nautilus" "nautilus"; }
+    Mod+2 { spawn "run-or-focus" "helium" "helium"; }
+    Mod+4 { spawn "run-or-focus" "flatpak run org.telegram.desktop" "org.telegram.desktop"; }
+    Mod+6 { spawn "run-or-focus" "flatpak run io.freetubeapp.FreeTube" "FreeTube"; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+Up { maximize-column; }
+    Mod+Shift+Up { maximize-window-to-edges; }
+    Mod+F { fullscreen-window; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+V { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Ctrl+Up { focus-window-up; }
+    Mod+Ctrl+Down { focus-window-down; }
+    Mod+W { toggle-column-tabbed-display; }
+
+    Mod+Space { spawn-sh "niri msg action switch-layout next; notify-send -a keyboard-layout $(niri msg keyboard-layouts | awk '/*/{print ($2==0?\"en\":\"ru\")}')"; }
+
+    Print { spawn "niri" "msg" "action" "screenshot" "-p=false"; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { spawn "niri" "msg" "action" "screenshot-window" "-p=false"; }
+
+    Ctrl+Alt+Delete { quit; }
+}
