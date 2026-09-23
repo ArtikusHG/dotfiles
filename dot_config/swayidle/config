@@ -1,4 +1,4 @@
-timeout 60 '[ ! -e /tmp/caffeine ] && bright - 5' resume '[ ! -e /tmp/caffeine ] && bright + 5'
+timeout 60 '[ ! -e /tmp/caffeine ] && bright - 50' resume '[ ! -e /tmp/caffeine ] && bright + 50'
 timeout 240 '[ ! -e /tmp/caffeine ] && notify-send -t 60000 -a suspend-soon "No activity, suspending soon!"' resume 'mako-dismiss-by-appname suspend-soon'
 timeout 300 '[ ! -e /tmp/caffeine ] && hyprlock'
 timeout 420 '[ ! -e /tmp/caffeine ] && niri msg action power-off-monitors && systemctl suspend' resume 'mako-dismiss-by-appname suspend-soon'
