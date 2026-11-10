@@ -201,7 +201,7 @@ binds {
     Mod+Ctrl+Down { focus-window-down; }
     Mod+W { toggle-column-tabbed-display; }
 
-    Mod+Space { spawn-sh "niri msg action switch-layout next; notify-send -a keyboard-layout $(niri msg keyboard-layouts | awk '/*/{print ($2==0?\"en\":\"ru\")}')"; }
+    Mod+Space { spawn-sh "niri msg action switch-layout next; notify-send -a keyboard-layout $(niri msg keyboard-layouts | awk '/\\*/{print ($2==0?\"en\":\"ru\")}')"; }
 
     Print { spawn "niri" "msg" "action" "screenshot" "-p=false"; }
     Ctrl+Print { screenshot-screen; }
